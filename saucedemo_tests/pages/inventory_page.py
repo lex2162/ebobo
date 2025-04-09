@@ -17,3 +17,4 @@ class InventoryPage(BasePage):
             return int(self.find_element(*self.CART_BADGE).text)
         except:
             return 0
+        # 123
