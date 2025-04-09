@@ -18,3 +18,4 @@ class InventoryPage(BasePage):
         except:
             return 0
         # 123
+        def
