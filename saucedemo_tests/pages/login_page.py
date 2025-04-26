@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from pages.base_page import BasePage
+from .base_page import BasePage
 
 class LoginPage(BasePage):
     USERNAME_FIELD = (By.ID, "user-name")
@@ -8,12 +8,12 @@ class LoginPage(BasePage):
     ERROR_MESSAGE = (By.CSS_SELECTOR, ".error-message-container")
 
     def open(self):
-        self.driver.get("https://www.saucedemo.com/")
+        self._open("https://www.saucedemo.com/")
 
     def login(self, username, password):
-        self.enter_text(*self.USERNAME_FIELD, username)
-        self.enter_text(*self.PASSWORD_FIELD, password)
-        self.click_element(*self.LOGIN_BUTTON)
+        self._enter_text(self.USERNAME_FIELD, username)
+        self._enter_text(self.PASSWORD_FIELD, password)
+        self._click_element(self.LOGIN_BUTTON)
 
     def get_error_message(self):
-        return self.get_text(*self.ERROR_MESSAGE)
+        return self._get_text(self.ERROR_MESSAGE)
