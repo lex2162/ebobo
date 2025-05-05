@@ -1,19 +1,20 @@
 import pytest
-import sys
-import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+def test_successful_login(login_page):
+    """Тест успешного логина"""
+    # Открываем страницу логина и выполняем вход
+    login_page.open()
+    login_page.login("standard_user", "secret_sauce")
 
-from pages.login_page import LoginPage
+    # Проверяем, что мы перешли на страницу инвентаря
+    assert "inventory.html" in login_page.driver.current_url, "Не произошёл переход на страницу инвентаря"
 
-def test_successful_login(browser):
-    page = LoginPage(browser)
-    page.open()
-    page.login("standard_user", "secret_sauce")
-    assert "inventory.html" in browser.current_url, "Не удалось авторизоваться"
+def test_failed_login(login_page):
+    """Тест неуспешного логина с некорректными данными"""
+    # Открываем страницу логина и пытаемся войти с неверными данными
+    login_page.open()
+    login_page.login("invalid_user", "invalid_pass")
 
-def test_failed_login(browser):
-    page = LoginPage(browser)
-    page.open()
-    page.login("wrong_user", "wrong_password")
-    assert "Epic sadface" in page.get_error_message(), "Нет сообщения об ошибке"
+    # Проверяем, что выводится сообщение об ошибке
+    error_text = login_page.get_error_message()
+    assert "Username and password do not match any user in this service" in error_text, f"Ожидали сообщение об ошибке, получили: {error_text}"

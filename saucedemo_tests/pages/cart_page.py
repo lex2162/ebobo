@@ -7,9 +7,10 @@ class CartPage(BasePage):
     CART_ITEM = (By.CLASS_NAME, "cart_item")
 
     def open(self):
-        """Возвращает количество товаров в корзине"""
-        return self._open("https://www.saucedemo.com/cart.html")
+        """Открывает страницу корзины"""
+        self._open("https://www.saucedemo.com/cart.html")
 
     def get_cart_items(self):
         """Возвращает количество товаров в корзине"""
-        return len(self._get_visibility_all_elements(self.CART_ITEM, timeout=5))
+        cart_items = self._get_visibility_all_elements(self.CART_ITEM, timeout=5)
+        return len(cart_items)

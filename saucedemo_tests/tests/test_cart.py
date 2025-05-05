@@ -1,13 +1,13 @@
-def test_add_item_to_cart(browser):
+def test_add_item_to_cart(driver, login_page, inventory_page, cart_page):
     """Тест добавления товара в корзину"""
-    # Авторизация
-    browser.login.open()
-    browser.login.login("standard_user", "secret_sauce")
+    # Открываем страницу логина и логинимся
+    login_page.open()
+    login_page.login("standard_user", "secret_sauce")
 
     # Добавляем товар в корзину
-    browser.inventory.add_first_item_to_cart()
-    assert browser.inventory.cart_item_count() == 1, "Товар не был добавлен в корзину"
+    inventory_page.add_first_item_to_cart()
+    assert inventory_page.cart_item_count() == 1, "Товар не был добавлен в корзину"
 
     # Проверяем, что товар действительно в корзине
-    browser.cart.open()
-    assert browser.cart.get_cart_items() == 1, "Корзина не содержит добавленный товар"
+    cart_page.open()
+    assert cart_page.get_cart_items() == 1, "Корзина не содержит добавленный товар"
